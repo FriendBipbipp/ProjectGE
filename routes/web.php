@@ -33,6 +33,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('forget-password',[App\Http\Controllers\ForgetPasswordManager::class,'forgetPassword'])->name('forget.password');
 Route::post('forget-password',[App\Http\Controllers\ForgetPasswordManager::class,'forgetPasswordPost'])->name('forget.password.post');
 
+//Score
+Route::get('/customscore', [App\Http\Controllers\ScoreController::class, 'customScore'])->name('customscore');
+Route::post('/calculatescore', [App\Http\Controllers\ScoreController::class, 'calculateScore'])->name('calculatescore');
+
 Route::get('dashboard',[App\Http\Controllers\memberDashboardController::class,'index'])->name('dashboard');
 //Route::get('admin/dashboard',[App\Http\Controllers\DashboardController::class,'adminDashboard'])->name('admin.dashboard')->middleware('is_admin');
 //Route::get('admin/dashboard',[App\Http\Controllers\DashboardController::class,'index'])->name('admin.dashboard')->middleware('is_admin');
