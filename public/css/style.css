@@ -159,3 +159,39 @@ body.page-landing {
     transform: translateY(-2px); /* ปุ่มขยับขึ้นเล็กน้อย */
     box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* เงาเข้มขึ้น */
 }
+
+/* ปรับปุ่มหลัก/รองให้เข้ากับธีม */
+.btn-primary,
+.btn-login { background-color: var(--archery-brown); border-color: var(--archery-brown); }
+.btn-primary:hover,
+.btn-login:hover { background-color: #A0522D; border-color: #A0522D; }
+
+.btn-success { background-color: #2e7d32; border-color: #2e7d32; }
+.btn-success:hover { background-color: #256a2a; border-color: #256a2a; }
+
+/* ฟอร์ม: โฟกัสเป็นสีน้ำตาลตามแบรนด์ */
+.form-control:focus {
+  border-color: var(--archery-brown);
+  box-shadow: 0 0 0 .2rem rgba(139,69,19,.25);
+}
+
+/* การ์ดหน้า auth ให้ดูสะอาด */
+.card.shadow-sm.border-0 { border-radius: .75rem; }
+.card-header.bg-archery-brown { border-radius: .75rem .75rem 0 0; }
+
+/* แจ้งเตือน error แสดงแน่ ๆ */
+.invalid-feedback { display: block; }
+
+/* จัด auth page ให้อยู่กลางแนวตั้งระหว่าง header/footer */
+.auth-wrapper { 
+  min-height: calc(100vh - 160px); /* เผื่อความสูง navbar + footer */
+  display: flex; align-items: center;
+}
+
+/* ลิงก์ธีม */
+a.link-archery { color: var(--archery-brown); text-decoration: none; }
+a.link-archery:hover { text-decoration: underline; }
+
+/* สีข้อความ/พื้นหลังช่วยเสริม */
+.text-archery-brown { color: var(--archery-brown) !important; }
+.bg-archery-soft { background: #fff7ef; }

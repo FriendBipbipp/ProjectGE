@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ForgetPasswordManager;
+use Illuminate\Support\Facades\Auth; // ✅ เพิ่ม
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnnounceController;
 use App\Http\Controllers\EquipController;
@@ -10,33 +10,33 @@ use App\Http\Controllers\EquipLoanController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MemberLoanController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\MemberDashboardController;
+
+// ✅ ใช้คอนโทรลเลอร์ของ flow ลืมรหัสผ่านชุดใหม่
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\NewPasswordController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 Route::get('/', function () {
     return view('webpage');
 });
 
-Auth::routes();
+Auth::routes(['reset' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//Route::get('admin/home', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
-Route::get('forget-password',[App\Http\Controllers\ForgetPasswordManager::class,'forgetPassword'])->name('forget.password');
-Route::post('forget-password',[App\Http\Controllers\ForgetPasswordManager::class,'forgetPasswordPost'])->name('forget.password.post');
 
-Route::get('dashboard',[App\Http\Controllers\memberDashboardController::class,'index'])->name('dashboard');
-//Route::get('admin/dashboard',[App\Http\Controllers\DashboardController::class,'adminDashboard'])->name('admin.dashboard')->middleware('is_admin');
-//Route::get('admin/dashboard',[App\Http\Controllers\DashboardController::class,'index'])->name('admin.dashboard')->middleware('is_admin');
-//Route::get('admin/dashboard/add-announce',[App\Http\Controllers\DashboardController::class,'addAnnounce'])->name('admin.add-announce')->middleware('is_admin');
+Route::get('dashboard', [MemberDashboardController::class,'index'])->name('dashboard');
+
+/** ✅ Forget Password (ใช้ชุดของ Laravel ตามสไตล์ Breeze/Jetstream) */
+Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 
 
 Route::get('equipLoan', [EquipLoanController::class, 'indexForMember'])->name('equipLoan');
@@ -50,7 +50,7 @@ Route::middleware('role:super-admin')->group(function(){
     Route::patch('/users/{user}/update-role', [UserManagementController::class, 'updateRole'])->name('users.updateRole');
 });
 
-ROute::middleware('role:admin')->group(function(){
+Route::middleware('role:admin')->group(function(){
     //Route::get('admin/home', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home');
     Route::get('admin/dashboard',[App\Http\Controllers\DashboardController::class,'index'])->name('admin.dashboard');
     Route::get('admin/announcements/create', [AnnounceController::class, 'create'])->name('admin.add-announce');
@@ -64,7 +64,7 @@ Route::get('admin/equip', [EquipController::class, 'index'])->name('admin.equip'
 Route::get('admin/equip/create', [EquipController::class, 'create'])->name('admin.add-equip');
 Route::post('admin/equip',[EquipController::class,'store'])->name('admin.equip-store');
 Route::get('admin/equip/{equip}/edit',[EquipController::class,'edit'])->name('admin.edit-equip');
-Route::put('admin/equip/{equip}}',[EquipController::class,'update'])->name('admin.update-equip');
+Route::put('admin/equip/{equip}',[EquipController::class,'update'])->name('admin.update-equip');
 Route::delete('admin/equip/{id}', [EquipController::class, 'destroy'])
     ->name('admin.delete-equip');
 
@@ -72,7 +72,7 @@ Route::get('admin/category', [CategoryController::class, 'index'])->name('admin.
 Route::get('admin/category/create', [CategoryController::class, 'create'])->name('admin.add-category');
 Route::post('admin/category',[CategoryController::class,'store'])->name('admin.category-store');
 Route::get('admin/category/{category}/edit',[CategoryController::class,'edit'])->name('admin.edit-category');
-Route::put('admin/category/{category}}',[CategoryController::class,'update'])->name('admin.update-category');
+Route::put('admin/category/{category}',[CategoryController::class,'update'])->name('admin.update-category');
 Route::delete('admin/category/{id}', [CategoryController::class, 'destroy'])
     ->name('admin.delete-category');
 

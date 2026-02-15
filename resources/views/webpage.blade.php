@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KKU Archery Club</title>
 
-<!--Google Fonts (Sarabun)-->
-<link rel="preconnect" href="https://fonts.googleapis.com" >
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
- <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
- <!-- Custom CSS (สำหรับ Background และปุ่มสีพิเศษ) -->
-<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!--Google Fonts (Sarabun)-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS (สำหรับ Background และปุ่มสีพิเศษ) -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
+
 <body>
 
     <!--
@@ -32,7 +36,7 @@
             สำคัญ: เปลี่ยน src เป็น path ของไฟล์โลโก้ของคุณ 
             mb-4 คือคลาสสำหรับเว้นระยะห่างด้านล่าง (Margin Bottom)
         -->
-        <img src="{{ asset('img/LOGO KK AC 3.png') }}" alt="Club Logo"  class="my-4 img-fluid" style="max-width: 240px;">
+        <img src="{{ asset('img/LOGO KK AC 3.png') }}" alt="Club Logo" class="my-4 img-fluid" style="max-width: 240px;">
 
         <!-- องค์ประกอบที่ 2: ชื่อและข้อความต้อนรับ -->
         <h1 class="display-5 fw-bold">Welcome to Khon Kaen University Archery Club</h1>
@@ -55,7 +59,7 @@
             @if (Route::has('login'))
                 <a href="{{ route('login') }}" class="btn btn-login btn-lg">LOG IN</a>
             @endif
-            
+
             {{-- กรณีที่ Login แล้ว, อาจจะแสดงปุ่ม Home แทน (ตามโค้ดเดิมของคุณ) --}}
             @auth
                 <a href="{{ url('/home') }}" class="btn btn-outline-light btn-lg">HOME</a>
@@ -67,4 +71,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
